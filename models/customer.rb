@@ -28,9 +28,20 @@ class Customer
     db.close()
   end
 
+  def Customer.all()
+    db = PG.connect ({ dbname: 'cinema', host: 'localhost' })
+    sql = "SELECT * FROM customers"
+    customer_hashes = db.exec(sql)
+    db.close()
+    return customers = customer_hashes.map { |customer_hash| Customer.new (customer_hash) }
+  end
 
-
-
+  def Customer.delete_all()
+    db = PG.connect ({ dbname: 'cinema', host: 'localhost' })
+    sql = "DELETE FROM customers"
+    db.exec(sql)
+    db.close() 
+  end
 
 
 

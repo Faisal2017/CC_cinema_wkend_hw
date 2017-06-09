@@ -28,8 +28,20 @@ class Film
     db.close()
   end
 
+  def Film.all()
+    db = PG.connect ({ dbname: 'cinema', host: 'localhost' })
+    sql = "SELECT * FROM films"
+    film_hashes = db.exec(sql)
+    db.close()
+    return films = film_hashes.map { |film_hash| Film.new (film_hash) }
+  end
 
-
+  def Film.delete_all()
+    db = PG.connect ({ dbname: 'cinema', host: 'localhost' })
+    sql = "DELETE FROM films"
+    db.exec(sql)
+    db.close() 
+  end
 
 
 

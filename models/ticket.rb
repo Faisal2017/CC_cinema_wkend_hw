@@ -27,8 +27,20 @@ class Ticket
     db.close()
   end
 
+  def Ticket.all()
+    db = PG.connect ({ dbname: 'cinema', host: 'localhost' })
+    sql = "SELECT * FROM tickets"
+    ticket_hashes = db.exec(sql)
+    db.close()
+    return tickets = ticket_hashes.map { |ticket_hash| Ticket.new (ticket_hash) }
+  end
 
-
+  def Ticket.delete_all()
+    db = PG.connect ({ dbname: 'cinema', host: 'localhost' })
+    sql = "DELETE FROM tickets"
+    db.exec(sql)
+    db.close() 
+  end
 
 
 
