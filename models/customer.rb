@@ -11,7 +11,22 @@ class Customer
     @funds = options['funds'].to_i
   end
 
-
+  def save()
+    db = PG.connect({ dbname: "cinema", host: "localhost"})
+    sql = "INSERT INTO customers 
+    (
+    name,
+    funds
+    )
+    VALUES
+    (
+    '#{@name}',
+    '#{@funds}'
+    )
+    RETURNING id"
+    @id = db.exec(sql)[0]["id"].to_i()
+    db.close()
+  end
 
 
 
